@@ -1,0 +1,55 @@
+{
+    "name": "vue3-electron-ts",
+    "private": true,
+    "version": "0.0.0",
+    "author": "icuxika",
+    "description": "Vue3 + Electron + TypeScript",
+    "type": "module",
+    "main": "dist-electron/main.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc && vite build",
+        "preview": "vite preview",
+        "build:electron": "tsc --project tsconfig.electron.json && renamer --find \"/js/g\" --replace \"mjs\" ./dist-electron/preload.js",
+        "electron": "wait-on tcp:5173 && electron .",
+        "electron:dev": "concurrently -k \"yarn dev\" \"yarn electron\"",
+        "electron:build": "yarn build && electron-builder"
+    },
+    "dependencies": {
+        "peerjs": "^1.5.4",
+        "uiohook-napi": "^1.5.4",
+        "vue": "^3.4.21"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.4",
+        "concurrently": "^8.2.2",
+        "electron": "^29.2.0",
+        "electron-builder": "^24.13.3",
+        "renamer": "^5.0.0",
+        "typescript": "^5.2.2",
+        "vite": "^5.2.0",
+        "vue-tsc": "^2.0.6",
+        "wait-on": "^7.2.0"
+    },
+    "build": {
+        "appId": "com.icuxika.vue3-electron-ts",
+        "productName": "ElectronApp",
+        "copyright": "© 2023 icuxika. All rights reserved.",
+        "mac": {
+            "category": "public.app-category.developer-tools"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": false
+        },
+        "files": [
+            "dist/**/*",
+            "dist-electron/**/*",
+            "src-electron/assets/application.ico"
+        ],
+        "directories": {
+            "buildResources": "build",
+            "output": "electron-dist"
+        }
+    }
+}
