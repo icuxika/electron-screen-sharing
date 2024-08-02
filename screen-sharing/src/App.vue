@@ -105,6 +105,14 @@ const startPeer = async () => {
 const connectRemote = async () => {
     const conn = peer.connect(remoteId.value);
     const call = peer.call(remoteId.value, stream);
+    call.on("stream", (remoteStream) => {
+        if (remoteCameraVideoRef.value) {
+            remoteCameraVideoRef.value.srcObject = remoteStream;
+            remoteCameraVideoRef.value.onloadedmetadata = () => {
+                remoteCameraVideoRef.value?.play();
+            };
+        }
+    });
 };
 
 const endConnect = async () => {
