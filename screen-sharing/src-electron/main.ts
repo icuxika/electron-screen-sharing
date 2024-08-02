@@ -89,9 +89,16 @@ const createWindow = () => {
     ]);
     Menu.setApplicationMenu(menu);
 
+    const isMacOS = process.platform === "darwin";
+
     // 托盘图标
     const appIcon = new Tray(
-        path.join(__dirname, "../src-electron/assets/application.ico")
+        path.join(
+            __dirname,
+            isMacOS
+                ? "../src-electron/assets/application.png"
+                : "../src-electron/assets/application.ico"
+        )
     );
     const contextMenu = Menu.buildFromTemplate([
         { label: "Item1", type: "radio" },
